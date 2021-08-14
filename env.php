@@ -7,5 +7,5 @@ $GLOBALS['APP_KEY'] = "HDzjtZMmA7iTi58ao6jxgjIh";
 
 $GLOBALS['DB_SERVER'] = "localhost";
 $GLOBALS['DB_USERNAME'] = "root";
-$GLOBALS['DB_PASSWORD'] = "root";
+$GLOBALS['DB_PASSWORD'] = "";
 $GLOBALS['DB_NAME'] = "zion_fx";

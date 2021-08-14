@@ -1,28 +1,32 @@
 <?php
 include "db_connection.php";
 
-getAllCurrency();
 
 function init(){
     echo ("asd");
     var_dump($_ENV);
 }
 
-function getAllCurrency(){
-    
-    $url = $GLOBALS['API_V3'].$GLOBALS['API_TYPE']."/list?type=".$GLOBALS['API_TYPE']."&access_key=".$GLOBALS['APP_KEY'];
+function saveCurrenciesToDB(){
+    include "db_connection.php";
 
-    echo $url;
+    $json_data = json_decode(file_get_contents("../constant/currencies.json"), true);
 
-    $sql = "INSERT INTO MyGuests (firstname, lastname, email)
-    VALUES ('John', 'Doe', 'john@example.com')";
+    foreach ($json_data['currencies'] as $key => $value) { 
+        $id = $value['id'];
+        $name = $value['name'];
+        $symbol = $value['symbol'];
+        $decimal = $value['decimal'];
+        $status = "active";
 
-    if ($conn->query($sql) === TRUE) {
-    $last_id = $conn->insert_id;
-    echo "New record created successfully. Last inserted ID is: " . $last_id;
-    } else {
-    echo "Error: " . $sql . "<br>" . $conn->error;
-    }
+        $sql = "INSERT INTO currencies  VALUES ('$id', '$name', '$symbol', '$decimal','$status')";
+        if ($conn->query($sql) === TRUE) {
+        $last_id = $conn->insert_id;
+        echo "New record created successfully. Last inserted ID is: " . $last_id . "<br>";
+        } else {
+        echo "Error: " . $sql . "<br>" . $conn->error;
+        }
 
+    } 
     $conn->close();
 }

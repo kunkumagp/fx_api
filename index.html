@@ -1,70 +1,39 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <title>Bootstrap Example</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
-
-  <link rel="stylesheet" href="css/style.css">
-
-</head>
-
-<body>
-
-  <div class="container text-center">
-    <h1><b>FX</b> Prediction forcast</h1>
-    <p>By <b>Kunkuma Geeth Prasanna</b> @ <a href="http://sanhindalk.com">Sanhinda Lanka pvt LTD.</a></p>
-  </div>
-
-  <div class="container-sm ">
-    <div class="row">
-      <div class="col-md-6 offset-md-3 box p-5">
-        <form>
-
-          <div class="form-group">
-            <label>API</label>
-            <input type="text" class="form-control" id="api" placeholder="API" value="https://fcsapi.com/">
-          </div>
-
-          <div class="form-group">
-            <label>API VERSION</label>
-            <select name="api_version" id="api_version" class="form-control">
-              <option value="api-v2">Version 2</option>
-              <option value="api-v3">Version 3</option>
-            </select>
-          </div>
-
-          <div class="form-group">
-            <label>API TYPE</label>
-            <select name="api_type" id="api_type" class="form-control">
-            </select>
-          </div>
-
-          <div class="form-group">
-            <label>API KEY</label>
-            <input type="text" class="form-control" id="api_key" placeholder="API KEY" value="HDzjtZMmA7iTi58ao6jxgjIh">
-          </div>
-
-          <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
-
-
-      </div>
-    </div>
-  </div>
-
-</body>
-
-</html>
-<script src="js/constants.js"></script>
 <script src="js/functions.js"></script>
 <script>
 
-  setApiTypes();
+  var env = '';
+
+  // readTextFile("./constant/currencies.json", function (text) {
+  //   var data = JSON.parse(text);
+  //   console.log(data.currencies);
+  // });
+
+  readTextFile("env.json", function (text) {
+    var data = JSON.parse(text);
+    env = data.env;
+  });
+
+
+  var url_string = window.location; //window.location.href
+  var url = new URL(url_string);
+  var requestedSymbol = url.searchParams.get("symbol");
+  var requestedPeriod = url.searchParams.get("period");
+
+
+  setTimeout(() => {
+    // Pivot Point signal
+    var api_url_1 = env.API_V2 + env.API_TYPE + "/pivot_points?symbol=" + requestedSymbol + "&period=" + requestedPeriod + "&access_key=" + env.APP_KEY;
+    $.ajax({
+      url: api_url_1,
+      type: "GET", // GET or POST 
+      dataType: "json",
+      success: function (data) {
+        console.log(data);
+        // console.log("Price of " + data.response[0].symbol + " is " + data.response[0].price); // Price of EUR/USD is 1.1064; 
+      }
+    });
+
+
+  }, 300);
 
 </script>
