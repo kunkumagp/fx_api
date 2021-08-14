@@ -1,0 +1,1 @@
+const API_TYPES = ['forex', 'crypto', 'stock', 'news'];

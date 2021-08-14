@@ -1,0 +1,4 @@
+<?php
+require_once __DIR__.'/core/ez.php';
+
+$argv[1] == 'init' ? init() : null ;
